@@ -26,6 +26,8 @@
                    :output-path "target/generated/test/cljs"
                    :rules :cljs}]}
 
+  :source-paths ["target/generated/src/clj"]
+
   :test-paths ["target/generated/test/clj"]
 
   :cljsbuild {:builds {:dev {:source-paths ["target/classes"]
