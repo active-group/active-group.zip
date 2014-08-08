@@ -8,6 +8,10 @@
 
   :plugins [[com.keminglabs/cljx "0.4.0"]
             [lein-cljsbuild "1.0.3"]
+            ;; NB: This needs a version of clojurescript.test with the Nashorn runner,
+            ;; for example from the nashorn-runner branch from
+            ;; https://github.com/active-group/clojurescript.test
+            [com.cemerick/clojurescript.test "0.3.2-SNAPSHOT"]
             [org.bodil/lein-nashorn "0.1.2"]]
 
   :cljx {:builds [{:source-paths ["src/cljx"]
@@ -30,9 +34,16 @@
 
   :test-paths ["target/generated/test/clj"]
 
-  :cljsbuild {:builds {:dev {:source-paths ["target/classes"]
+  :cljsbuild {:builds
+              {:dev {:source-paths ["target/classes"]
                              :compiler {:output-to "target/main.js"
                                         :optimizations :whitespace
-                                        :pretty-print true}}}}
+                                        :pretty-print true}}
+               :test {:source-paths ["target/generated/src/cljs"
+                                     "target/generated/test/cljs"]
+                      :compiler {:output-to "target/test.js"
+                                 :optimizations :whitespace
+                                 :pretty-print true}}}
+              :test-commands {"nashorn" ["jrunscript" "-e" "var global = this" "-f" :nashorn-runner "target/test.js"]}}
 
-  :hooks [cljx.hooks])
+  :hooks [cljx.hooks leiningen.cljsbuild])

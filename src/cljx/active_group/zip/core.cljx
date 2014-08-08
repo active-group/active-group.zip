@@ -23,13 +23,17 @@
   (-node-children [node] "Return children of this node.")
   (-make-node [node children] "Makes new node from existing node and new children."))
 
-(extend-type Object IZipNode
+(extend-type #+clj Object #+cljs object IZipNode
              (-branch? [node] false)
              (-make-node [node children] node))
 
 (defrecord ZipLoc [node path])
 
 (defrecord Path [l pnodes ppath r changed?])
+
+(defn- excn
+  [^String msg]
+  (#+clj Exception. #+cljs js/Error msg))
 
 (defn zipper
   [root]
@@ -57,7 +61,7 @@
   (let [node (:node loc)]
     (cond
      (not (node-branch? node))
-     (throw (Exception. "called children on a leaf node"))
+     (throw (excn "called children on a leaf node"))
      
      (seq? node) node
      (vector? node) (seq node)
@@ -171,7 +175,7 @@
   [loc item]
   (let [path (:path loc)]
     (if (nil? (:ppath path))
-      (throw (new Exception "Insert at top"))
+      (throw (excn "Insert at top"))
       (ZipLoc. (:node loc) (assoc path :l (conj (:l path) item) :changed? true)))))
   
 (defn insert-right
@@ -180,7 +184,7 @@
   [loc item]
   (let [path (:path loc)]
     (if (nil? (:ppath path))
-      (throw (new Exception "Insert at top"))
+      (throw (excn "Insert at top"))
       (ZipLoc. (:node loc) (assoc path :r (cons item (:r path)) :changed? true)))))
 
 (defn replace
@@ -244,7 +248,7 @@
         l (:l path)
         ppath (:ppath path)]
     (if (nil? ppath)
-      (throw (new Exception "Remove at top"))
+      (throw (excn "Remove at top"))
       (if (pos? (count l))
         (loop [loc (ZipLoc. (peek l) (assoc path :l (pop l) :changed? true))]
           (if-let [child (and (branch? loc) (down loc))]

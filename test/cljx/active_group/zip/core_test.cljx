@@ -1,6 +1,10 @@
 (ns active-group.zip.core-test
-  (:require [clojure.test :refer :all]
-            [active-group.zip.core :as zip]))
+  (:require #+clj [clojure.test :refer :all]
+            #+cljs [cemerick.cljs.test :as t]
+            [active-group.zip.core :as zip])
+  #+cljs
+  (:require-macros [cemerick.cljs.test
+                    :refer (is deftest with-test run-tests testing test-var)]))
 
 (def data '[[a * b] + [c * d]])
 (def dz (zip/zipper data))
