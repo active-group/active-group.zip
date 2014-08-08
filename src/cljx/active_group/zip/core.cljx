@@ -23,7 +23,7 @@
   (-node-children [node] "Return children of this node.")
   (-make-node [node children] "Makes new node from existing node and new children."))
 
-(extend-type #+clj Object #+cljs object IZipNode
+(extend-type #+clj Object #+cljs default IZipNode
              (-branch? [node] false)
              (-make-node [node children] node))
 
