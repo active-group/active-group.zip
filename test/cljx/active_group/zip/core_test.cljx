@@ -1,4 +1,4 @@
-(ns active-group.zippers.core-test
+(ns active-group.zip.core-test
   (:require [clojure.test :refer :all]
             [active-group.zip.core :as zip]))
 
