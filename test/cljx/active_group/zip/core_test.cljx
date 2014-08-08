@@ -31,7 +31,7 @@
   (is (= '[[a * b] + [c * e]]
          (-> dz zip/next zip/next zip/next zip/next zip/next zip/next zip/next zip/next zip/next zip/remove zip/up (zip/append-child 'e) zip/root))))
 
-(deftest next
+(deftest tnext
   (is (= true
          (zip/end? (-> dz zip/next zip/next zip/next zip/next zip/next zip/next zip/next zip/next zip/next zip/remove zip/next))))
   (is (= '[[c * d]]
