@@ -15,22 +15,22 @@
             [org.bodil/lein-nashorn "0.1.2"]]
 
   :cljx {:builds [{:source-paths ["src/cljx"]
-                   :output-path "target/generated/src/clj"
+                   :output-path "target/generated/src"
                    :rules :clj}
-                  
+
                   {:source-paths ["src/cljx"]
-                   :output-path "target/generated/src/cljs"
+                   :output-path "target/generated/src"
                    :rules :cljs}
 
                   {:source-paths ["test/cljx"]
                    :output-path "target/generated/test/clj"
                    :rules :clj}
-                  
+
                   {:source-paths ["test/cljx"]
                    :output-path "target/generated/test/cljs"
                    :rules :cljs}]}
 
-  :source-paths ["target/generated/src/clj"]
+  :source-paths ["target/generated/src"]
 
   :test-paths ["target/generated/test/clj"]
 
@@ -39,7 +39,7 @@
                              :compiler {:output-to "target/main.js"
                                         :optimizations :whitespace
                                         :pretty-print true}}
-               :test {:source-paths ["target/generated/src/cljs"
+               :test {:source-paths ["target/generated/src"
                                      "target/generated/test/cljs"]
                       :compiler {:output-to "target/test.js"
                                  :optimizations :whitespace
