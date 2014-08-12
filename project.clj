@@ -1,4 +1,4 @@
-(defproject active-group.zip "0.1.0-SNAPSHOT"
+(defproject active-group/zip "0.1.0-SNAPSHOT"
   :description "Functional hierarchical compositional zippers"
   :url "http://github.com/active-group/reacl/zippers"
   :license {:name "Eclipse Public License"
