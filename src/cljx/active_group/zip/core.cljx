@@ -125,16 +125,21 @@
                    (and ppath (assoc ppath :changed? true)))
           (ZipLoc. pnode ppath))))))
 
+(defn top
+  "Zips all the way up and returns the top loc."
+  [loc]
+  (if (= :end (:path loc))
+    loc
+    (let [p (up loc)]
+      (if p
+        (recur p)
+        loc))))
+
 (defn root
   "zips all the way up and returns the root node, reflecting any
  changes."
   [loc]
-  (if (= :end (:path loc))
-      (node loc)
-      (let [p (up loc)]
-        (if p
-          (recur p)
-          (node loc)))))
+  (node (top loc)))
 
 (defn right
   "Returns the loc of the right sibling of the node at this loc, or nil"
